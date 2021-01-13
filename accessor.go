@@ -242,7 +242,9 @@ loop:
 			if current = current.FieldByName(name); !current.IsValid() {
 				return reflect.Value{}, ErrInvalidPath
 			}
-			return valueByKey(current, key)
+			if current, err = valueByKey(current, key); err != nil {
+				return reflect.Value{}, err
+			}
 		}
 	}
 	return current, nil
@@ -300,14 +302,31 @@ func Get(path string, root interface{}) (interface{}, error) {
 
 // MustGet is like Get but panics on error.
 func MustGet(path string, root interface{}) interface{} {
-	return nil
+	var val reflect.Value
+	var err error
+	if val, err = Find(path, root); err != nil {
+		panic(err)
+	}
+	return val.Interface()
 }
 
 func Set(path, value string, root interface{}) error {
-	return nil
+	var val reflect.Value
+	var err error
+	if val, err = Find(path, root); err != nil {
+		return err
+	}
+	return StringToValue(value, reflect.Indirect(val))
 }
 
 // MustSet is like Set but panics on error.
 func MustSet(path, value string, root interface{}) {
-
+	var val reflect.Value
+	var err error
+	if val, err = Find(path, root); err != nil {
+		panic(err)
+	}
+	if err = StringToValue(value, reflect.Indirect(val)); err != nil {
+		panic(err)
+	}
 }

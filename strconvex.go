@@ -22,12 +22,14 @@ var (
 	// ErrStrconvex is the base error of strconvex package.
 	ErrStrconvex = errors.New("strconvex")
 
-	// ErrInvalidPath help.
+	// ErrInvalidPath is returned when specified accessor path is invalid.
 	ErrInvalidPath = fmt.Errorf("%w: invalid path", ErrStrconvex)
 	// ErrInvalidValue is returned when an invalid value is specified.
 	ErrInvalidValue = fmt.Errorf("%w: invalid value", ErrStrconvex)
-	// ErrInvalidArgument help.
+	// ErrInvalidArgument is returned when an invalid argument was specified.
 	ErrInvalidArgument = fmt.Errorf("%w: invalid argument", ErrStrconvex)
-	// ErrUnsupportedValue help.
+	// ErrUnsupportedValue is returned when specified value is unsupported.
 	ErrUnsupportedValue = fmt.Errorf("%w: unsupported value", ErrStrconvex)
+	// ErrUnaddressableValue is returned when specified value is unaddressable.
+	ErrUnaddressableValue = fmt.Errorf("%w: unadressable value", ErrStrconvex)
 )

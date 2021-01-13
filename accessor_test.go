@@ -264,32 +264,148 @@ func TestParseElement(t *testing.T) {
 	}
 }
 
-func TestFind(t *testing.T) {
+type Child struct {
+	Bool   bool
+	Int    int
+	String string
+}
 
-	type Level3 struct {
-		Name string
-	}
+type Root struct {
+	Child
+	Array [5]Child
+	Slice []Child
+	Map   map[string]Child
+}
 
-	type Level2 map[string]Level3
-
-	type Level1 struct {
-		Level2
-	}
-
-	var data = Level1{
-		Level2: Level2{
-			"Level3": Level3{
-				Name: "Foo",
+func getData() *Root {
+	return &Root{
+		Array: [5]Child{
+			{
+				Bool:   true,
+				Int:    1,
+				String: "One",
+			},
+			{
+				Bool:   false,
+				Int:    2,
+				String: "Two",
+			},
+			{
+				Bool:   true,
+				Int:    3,
+				String: "Three",
+			},
+			{
+				Bool:   false,
+				Int:    4,
+				String: "Four",
+			},
+			{
+				Bool:   true,
+				Int:    5,
+				String: "Five",
+			},
+		},
+		Slice: []Child{
+			{
+				Bool:   true,
+				Int:    1,
+				String: "One",
+			},
+			{
+				Bool:   false,
+				Int:    2,
+				String: "Two",
+			},
+			{
+				Bool:   true,
+				Int:    3,
+				String: "Three",
+			},
+			{
+				Bool:   false,
+				Int:    4,
+				String: "Four",
+			},
+			{
+				Bool:   true,
+				Int:    5,
+				String: "Five",
+			},
+		},
+		Map: map[string]Child{
+			"One": {
+				Bool:   true,
+				Int:    1,
+				String: "One",
+			},
+			"Two": {
+				Bool:   false,
+				Int:    2,
+				String: "Two",
+			},
+			"Three": {
+				Bool:   true,
+				Int:    3,
+				String: "Three",
+			},
+			"Four": {
+				Bool:   false,
+				Int:    4,
+				String: "Four",
+			},
+			"Five": {
+				Bool:   true,
+				Int:    5,
+				String: "Five",
 			},
 		},
 	}
+}
 
-	var v reflect.Value
+func TestFind(t *testing.T) {
+	var val reflect.Value
 	var err error
-
-	if v, err = Find("Level2[Level3].Name", data); err != nil {
+	if val, err = Find("Map[Three].String", getData()); err != nil {
 		t.Fatal(err)
 	}
+	if val.String() != "Three" {
+		t.Fatal("Find failed.")
+	}
+}
 
-	t.Log(v)
+func TestGet(t *testing.T) {
+	var intf interface{}
+	var err error
+	if intf, err = Get("Map[Three].String", getData()); err != nil {
+		t.Fatal(err)
+	}
+	var s string
+	var ok bool
+	if s, ok = intf.(string); !ok {
+		t.Fatal("Get failed.")
+	}
+	if s != "Three" {
+		t.Fatal("Get failed.")
+	}
+}
+
+func TestSet(t *testing.T) {
+	var data = getData()
+	var err error
+	if err = Set("Slice[3].String", "Foo", data); err != nil {
+		t.Fatal(err)
+	}
+	var intf interface{}
+	if intf, err = Get("Slice[3].String", data); err != nil {
+		t.Fatal(err)
+	}
+	var s string
+	var ok bool
+	if s, ok = intf.(string); !ok {
+		t.Fatal("Set failed.")
+	}
+	if s != "Foo" {
+		t.Fatal("Set failed.")
+	}
 }

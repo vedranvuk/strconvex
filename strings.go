@@ -105,6 +105,9 @@ func StringToBoolValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
 	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
+	}
 	return stringToBoolValue(in, out)
 }
 
@@ -122,6 +125,9 @@ func stringToBoolValue(in string, out reflect.Value) error {
 func StringToIntValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
+	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
 	}
 	return stringToIntValue(in, out)
 }
@@ -141,6 +147,9 @@ func StringToUintValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
 	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
+	}
 	return stringToUintValue(in, out)
 }
 
@@ -157,6 +166,9 @@ func stringToUintValue(in string, out reflect.Value) error {
 func StringToFloat32Value(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
+	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
 	}
 	return stringToFloat32Value(in, out)
 }
@@ -175,6 +187,9 @@ func StringToFloat64Value(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
 	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
+	}
 	return stringToFloat64Value(in, out)
 }
 
@@ -191,6 +206,9 @@ func stringToFloat64Value(in string, out reflect.Value) error {
 func StringToComplex64Value(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
+	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
 	}
 	return stringToComplex64Value(in, out)
 }
@@ -209,6 +227,9 @@ func StringToComplex128Value(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
 	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
+	}
 	return stringToComplex128Value(in, out)
 }
 
@@ -226,6 +247,9 @@ func StringToStringValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
 	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
+	}
 	return stringToStringValue(in, out)
 }
 
@@ -240,6 +264,9 @@ func stringToStringValue(in string, out reflect.Value) error {
 func StringToArrayValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
+	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
 	}
 	return stringToArrayValue(in, out)
 }
@@ -263,6 +290,9 @@ func StringToSliceValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
 	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
+	}
 	return stringToSliceValue(in, out)
 }
 
@@ -284,6 +314,9 @@ func stringToSliceValue(in string, out reflect.Value) error {
 func StringToMapValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
+	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
 	}
 	return stringToMapValue(in, out)
 }
@@ -318,6 +351,9 @@ func StringToStructValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
 	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
+	}
 	return stringToStructValue(in, out)
 }
 
@@ -345,6 +381,9 @@ func stringToStructValue(in string, out reflect.Value) error {
 func StringToPointerValue(in string, out reflect.Value) error {
 	if !out.IsValid() {
 		return ErrInvalidValue
+	}
+	if !out.CanSet() {
+		return ErrUnaddressableValue
 	}
 	return stringToPointerValue(in, out)
 }
